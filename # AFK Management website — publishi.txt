@@ -1,0 +1,47 @@
+# AFK Management website — publishing on GitHub Pages
+
+This folder has three files: `index.html` (the site), `CNAME` (tells GitHub your domain), and this README.
+
+## 1. Create a free GitHub account
+Go to https://github.com/signup and sign up. Your username (USERNAME below) becomes part of your site address.
+
+## 2. Create a repository
+Click **+** (top right) > **New repository**. Name it `afkmanage.online`, set it to **Public**, and click **Create repository**.
+
+## 3. Upload the files
+In the new repository, click **Add file > Upload files**, drag in `index.html` and `CNAME`, then click **Commit changes**.
+
+## 4. Turn on GitHub Pages
+Go to **Settings > Pages**. Under **Source** choose **Deploy from a branch**, branch **main**, folder **/ (root)**, then **Save**.
+After a minute or two the site is live at `https://USERNAME.github.io/afkmanage.online/`.
+
+## 5. Set the custom domain
+Still in **Settings > Pages**, enter `www.afkmanage.online` under **Custom domain** and click **Save**. Once the DNS check passes and the certificate is ready, tick **Enforce HTTPS**.
+
+## 6. Porkbun DNS records (you add these yourself)
+Porkbun > **Domain Management** > afkmanage.online > **DNS**.
+
+**First delete the two default records:**
+- ALIAS `afkmanage.online` → `pixie.porkbun.com`
+- CNAME `*.afkmanage.online` → `pixie.porkbun.com`
+
+**Then add these (each its own record; leave Host blank for @):**
+
+| Type | Host | Answer |
+|---|---|---|
+| A | @ (blank) | 185.199.108.153 |
+| A | @ (blank) | 185.199.109.153 |
+| A | @ (blank) | 185.199.110.153 |
+| A | @ (blank) | 185.199.111.153 |
+| CNAME | www | USERNAME.github.io |
+
+**Important:** do NOT add a CNAME at the bare/apex domain (`afkmanage.online`). A CNAME can't coexist with the A records there.
+
+**Optional (IPv6) AAAA records, Host @:**
+2606:50c0:8000::153, 2606:50c0:8001::153, 2606:50c0:8002::153, 2606:50c0:8003::153
+
+DNS changes can take up to 24 hours to take effect.
+
+## Notes
+- **Contact form:** it uses a `mailto:` link, so it opens the visitor's own email app instead of sending directly. For a form that sends straight to your inbox, a free optional upgrade is Formspree (https://formspree.io): create a form there and replace the form's `action` with the URL it gives you (and remove `enctype="text/plain"`).
+- **GitHub terms:** GitHub says Pages isn't intended mainly for running a commercial business (like online sales). A simple informational business site like this one is generally fine.
