@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AFK Management</title>
+    <meta
+      name="description"
+      content="AFK Management helps businesses stay organized, responsive, and operationally efficient with practical administrative and day-to-day support."
+    />
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: #121a2b;
+        --panel-alt: #171f33;
+        --text: #edf3ff;
+        --muted: #a7b5d6;
+        --primary: #7dd3fc;
+        --primary-strong: #38bdf8;
+        --accent: #8b5cf6;
+        --success: #22c55e;
+        --border: rgba(255,255,255,0.09);
+        --shadow: 0 20px 45px rgba(12, 18, 36, 0.45);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(180deg, var(--bg) 0%, #0f172a 100%);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .container {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(12px);
+        background: rgba(11, 16, 32, 0.7);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 74px;
+      }
+
+      .brand {
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .brand span {
+        color: var(--primary);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        color: var(--muted);
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.9rem 1.5rem;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-weight: 700;
+        transition: 0.2s ease;
+      }
+
+      .button.primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+        color: #06111d;
+        box-shadow: var(--shadow);
+      }
+
+      .button.primary:hover {
+        transform: translateY(-1px);
+      }
+
+      .button.secondary {
+        background: rgba(255,255,255,0.02);
+        border-color: var(--border);
+        color: var(--text);
+      }
+
+      .hero {
+        padding: 84px 0 40px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        background: rgba(125, 211, 252, 0.1);
+        border: 1px solid rgba(125, 211, 252, 0.2);
+        color: var(--primary);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        font-size: clamp(2.5rem, 5vw, 4.8rem);
+        line-height: 1.05;
+        margin: 0 0 18px;
+      }
+
+      .lead {
+        margin: 0 0 28px;
+        max-width: 60ch;
+        color: var(--muted);
+        font-size: 1.1rem;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 26px;
+      }
+
+      .mini-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        color: var(--muted);
+      }
+
+      .mini-stats strong {
+        display: block;
+        color: var(--text);
+        font-size: 1.2rem;
+      }
+
+      .card {
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .hero-panel {
+        padding: 26px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-panel::before {
+        content: "";
+        position: absolute;
+        inset: 18px auto auto 18px;
+        width: 78px;
+        height: 78px;
+        border-radius: 50%;
+        background: rgba(139, 92, 246, 0.18);
+        filter: blur(18px);
+      }
+
+      .panel-list {
+        list-style: none;
+        padding: 0;
+        margin: 18px 0 0;
+        display: grid;
+        gap: 14px;
+      }
+
+      .panel-list li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: var(--muted);
+      }
+
+      .check {
+        width: 22px;
+        height: 22px;
+        display: inline-grid;
+        place-items: center;
+        border-radius: 50%;
+        background: rgba(34, 197, 94, 0.15);
+        color: var(--success);
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      section {
+        padding: 28px 0 20px;
+      }
+
+      .section-head {
+        margin-bottom: 20px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        margin: 0 0 10px;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .services-grid,
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .service,
+      .benefit {
+        padding: 28px 22px;
+      }
+
+      .icon {
+        width: 50px;
+        height: 50px;
+        display: inline-grid;
+        place-items: center;
+        border-radius: 16px;
+        background: rgba(125, 211, 252, 0.1);
+        color: var(--primary);
+        font-size: 1.2rem;
+        margin-bottom: 14px;
+      }
+
+      .service h3,
+      .benefit h3 {
+        margin: 0 0 12px;
+        font-size: 1.25rem;
+      }
+
+      .service p,
+      .benefit p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .cta-panel {
+        margin-top: 36px;
+        padding: 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .cta-panel h3 {
+        margin: 0 0 8px;
+        font-size: clamp(1.7rem, 2vw, 2.3rem);
+      }
+
+      .cta-panel p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 18px 0 0;
+        display: grid;
+        gap: 14px;
+      }
+
+      .contact-list li {
+        color: var(--muted);
+      }
+
+      footer {
+        padding: 36px 0 56px;
+        color: var(--muted);
+      }
+
+      @media (max-width: 860px) {
+        .hero-grid,
+        .services-grid,
+        .benefits-grid,
+        .cta-panel {
+          grid-template-columns: 1fr;
+          display: grid;
+        }
+
+        .nav {
+          flex-wrap: wrap;
+          justify-content: center;
+          padding: 16px 0;
+        }
+
+        .nav-links {
+          width: 100%;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .cta-panel {
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a href="#top" class="brand">AFK <span>Management</span></a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#services">Services</a>
+          <a href="#why-us">Why Us</a>
+          <a href="#contact">Contact</a>
+          <a class="button primary" href="mailto:hello@afkmanage.online">Book a Call</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="eyebrow">Built for business clarity</div>
+            <h1>Operational support that keeps your business moving.</h1>
+            <p class="lead">
+              AFK Management helps small businesses stay organized, responsive, and efficient with practical support in admin, coordination, communication, and day-to-day execution.
+            </p>
+            <div class="cta-row">
+              <a class="button primary" href="#contact">Get Started</a>
+              <a class="button secondary" href="#services">Explore Services</a>
+            </div>
+            <div class="mini-stats">
+              <div>
+                <strong>Flexible</strong>
+                support on your schedule
+              </div>
+              <div>
+                <strong>Reliable</strong>
+                systems and follow-through
+              </div>
+              <div>
+                <strong>Focused</strong>
+                on what matters most
+              </div>
+            </div>
+          </div>
+
+          <aside class="card hero-panel" aria-label="What AFK Management provides">
+            <div class="eyebrow" style="margin-bottom: 12px;">What we do</div>
+            <ul class="panel-list">
+              <li><span class="check">✓</span><span>Administrative support and coordination for busy teams.</span></li>
+              <li><span class="check">✓</span><span>Client communication, scheduling, and follow-up management.</span></li>
+              <li><span class="check">✓</span><span>Process improvement and business organization that reduces friction.</span></li>
+              <li><span class="check">✓</span><span>Reliable help for daily execution so owners can focus on growth.</span></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section id="services">
+        <div class="container">
+          <div class="section-head">
+            <h2>Services</h2>
+            <p>Support built around the parts of your business that need structure, consistency, and follow-through.</p>
+          </div>
+
+          <div class="services-grid">
+            <article class="card service">
+              <div class="icon">📋</div>
+              <h3>Administrative Support</h3>
+              <p>Inbox management, scheduling, documentation, and operational organization that keeps everything moving without extra chaos.</p>
+            </article>
+
+            <article class="card service">
+              <div class="icon">🤝</div>
+              <h3>Client & Team Coordination</h3>
+              <p>Clear communication, task tracking, and follow-up systems that help teams stay aligned and responsive.</p>
+            </article>
+
+            <article class="card service">
+              <div class="icon">⚙️</div>
+              <h3>Process Improvement</h3>
+              <p>Identify bottlenecks, simplify workflows, and create repeatable systems that improve daily efficiency.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="why-us">
+        <div class="container">
+          <div class="section-head">
+            <h2>Why AFK Management</h2>
+            <p>Practical business support designed to help you stay organized, responsive, and ready to grow.</p>
+          </div>
+
+          <div class="benefits-grid">
+            <article class="card benefit">
+              <div class="icon">⏱️</div>
+              <h3>Save Time</h3>
+              <p>Reduce time spent on repetitive operational tasks so you can focus on strategy and revenue.</p>
+            </article>
+
+            <article class="card benefit">
+              <div class="icon">📈</div>
+              <h3>Improve Consistency</h3>
+              <p>Build dependable systems that keep communication, follow-up, and internal workflows on track.</p>
+            </article>
+
+            <article class="card benefit">
+              <div class="icon">💬</div>
+              <h3>Keep Customers Happy</h3>
+              <p>Deliver a smoother experience with responsive communication and better day-to-day coordination.</p>
+            </article>
+          </div>
+
+          <div class="card cta-panel" style="margin-top: 28px;">
+            <div>
+              <h3>Need dependable support behind the scenes?</h3>
+              <p>AFK Management helps businesses stay organized without the overwhelm.</p>
+            </div>
+            <a class="button primary" href="mailto:hello@afkmanage.online">Say Hello</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="container">
+          <div class="section-head">
+            <h2>Contact</h2>
+            <p>Tell us what needs attention, and we’ll help you make it easier to manage.</p>
+          </div>
+
+          <div class="card" style="padding: 28px 22px;">
+            <ul class="contact-list">
+              <li>Email: <a href="mailto:hello@afkmanage.online">hello@afkmanage.online</a></li>
+              <li>Website: <a href="https://www.afkmanage.online">www.afkmanage.online</a></li>
+              <li>Availability: Flexible support for ongoing and project-based needs</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">© 2025 AFK Management. Built for streamlined operations.</div>
+    </footer>
+  </body>
+</html>
+
